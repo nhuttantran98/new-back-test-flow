@@ -1,3 +1,4 @@
 /web-sentinel-test
 /node_modules
 /dist
+/python_helpers/.venv
