@@ -29,8 +29,8 @@ if exist ".venv\Scripts\activate.bat" (
 
 REM ✅ RUN Python uploader with ARGS:
 py -m jfrog_uploader ^
-    "--artifact_result=.\..\web-sentinel-test\test-results\%NAME%" ^
-    "--json_result=.\..\web-sentinel-test\test-results\test-results.json" ^
+    "--artifact_result=.\..\project\test-results\%NAME%" ^
+    "--json_result=.\..\project\test-results\test-results.json" ^
     "--dest=test/testreport/ws/WS_1.21.0" ^
     "--base-url=%JFROG_URL%" ^
     "--repo=%JFROG_REPO%" ^

@@ -8,8 +8,6 @@ const UPLOAD_DIR = path.join(ROOT_DIR, "uploads");
 const OUTPUT_DIR = path.join(ROOT_DIR, "outputs");
 const PYTHON_HELPERS_DIR = path.join(ROOT_DIR, "python_helpers");
 
-
-
 function getNewestCSVFileName(folderPath) {
   try {
     const files = fs.readdirSync(folderPath)
@@ -28,11 +26,10 @@ function getNewestCSVFileName(folderPath) {
   }
 }
 
-
-
 function convertCSVToJson(csvFile, res) {
     const fileName = csvFile.originalname;
     const filePath = path.join(UPLOAD_DIR, fileName);
+    console.log("File uploaded ", fileName);
     // --- 1. Read file Excel ---
     const workbook = readFile(filePath);
     const sheetName = workbook.SheetNames[0];
@@ -65,7 +62,6 @@ function convertCSVToJson(csvFile, res) {
         output: path.join(OUTPUT_DIR, "out.json")
     });
 }
-
 
 function convertJsonToCSV() {
     return new Promise((resolve, reject) => {

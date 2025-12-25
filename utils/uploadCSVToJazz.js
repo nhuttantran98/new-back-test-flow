@@ -8,6 +8,16 @@ const ROOT_DIR = path.dirname(__dirname, "..");
 const UPLOAD_DIR = path.join(ROOT_DIR, "uploads");
 const PYTHON_HELPERS_DIR = path.join(ROOT_DIR, "python_helpers");
 
+function checkAllPassed(stdout) {
+    const lines = stdout.split('\n');   
+    for (const line of lines) {
+        if (line.includes('FAIL')) {
+            return false;
+        }   
+    }
+    return true;
+}
+
 function uploadCSVToJazz(req, res) {
     return new Promise((resolve, reject) => {
         try {
@@ -73,7 +83,14 @@ function uploadCSVToJazz(req, res) {
 
             py.on('close', (code) => {
                 if (code === 0) {
-                    resolve({ ok: true, stdout, csvPath: updatedCSVPath });
+                    const allPassed = checkAllPassed(stdout);
+                    if (!allPassed) {
+                        console.warn('Warning: Some test cases failed during Jazz upload.');
+                        resolve({ ok: false, stdout, csvPath: updatedCSVPath });
+                    } else {
+                        console.log('CSV uploaded to Jazz successfully with all test cases passed.');
+                        resolve({ ok: true, stdout, csvPath: updatedCSVPath });
+                    }
                 } else {
                     const err = new Error(`Jazz upload failed with exit code ${code}`);
                     err.stdout = stdout;

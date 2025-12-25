@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const cors = require('cors');
 
 const convertCSVToJson = require('./utils/convert').convertCSVToJson;
 const convertJsonToCSV = require('./utils/convert').convertJsonToCSV;
@@ -11,13 +12,15 @@ const runTestCase = require('./utils/runTestCase').runTestCase;
 const runThisSuitePython = require('./utils/runThisSuitePython').runThisSuitePython;
 const getJfrogArgsFromRequest = require('./utils/getJfrogArgsFromRequest').getJfrogArgsFromRequest;
 const uploadCSVToJazz = require('./utils/uploadCSVToJazz').uploadCSVToJazz;
+const gitPullProject = require('./utils/gitPullProject').gitPullProject;
 
 const app = express();
-const ROOT_DIR = path.dirname(__dirname);
-const UPLOAD_DIR = path.join(ROOT_DIR, "uploads");
-const OUTPUT_DIR = path.join(ROOT_DIR, "outputs");
-const PROJECT_DIR = path.join(ROOT_DIR, "web-sentinel-test");
-const PYTHON_HELPERS_DIR = path.join(ROOT_DIR, "python_helpers");
+app.use(cors());
+const ROOT_DIR = path.dirname(__filename);  
+const UPLOAD_DIR = path.join(__dirname, "uploads");
+const OUTPUT_DIR = path.join(__dirname, "outputs");
+const PROJECT_DIR = path.join(__dirname, "project");
+const PYTHON_HELPERS_DIR = path.join(__dirname, "python_helpers");
 
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR);
 if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
@@ -33,7 +36,7 @@ app.use(express.json());
 // Health check
 app.get('/', (req, res) => res.json({ status: 'ok' }));
 
-// Run pytest for a given test case name inside web-sentinel-test
+// Run pytest for a given test case name inside project directory
 app.post('/run-test-case', (req, res) => {
 	const { test_case_name } = req.body.test_case_name || {};
     console.log(`Received request to run test case: ${test_case_name}`);
@@ -43,13 +46,32 @@ app.post('/run-test-case', (req, res) => {
     runTestCase(test_case_name, res);
 });
 
-app.post('/convert-csv-to-json', upload.single('file'), async (req, res) => {
+app.post('/convert', upload.single('file'), async (req, res) => {
     try {
         convertCSVToJson(req.file, res);
     } catch (err) {
         console.error("Error converting:", err);
         res.status(500).json({ success: false, message: err.message });
     }
+});
+
+app.get('/get-json-data', async (req, res) => {
+    const outJSONPath = path.join(OUTPUT_DIR, "out.json");
+    if (fs.existsSync(outJSONPath)) {
+        res.sendFile(outJSONPath);
+    } else {
+        res.status(404).json({ error: "out.json not found" });
+    }
+});
+
+app.post('/pull-project', async (req, res) => {
+    try {
+        gitPullProject(req, res);
+
+    } catch (err) {
+        console.error("GIT PULL ERROR:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }   
 });
 
 app.post('/upload-env', upload.single('file'), (req, res) => {
@@ -96,14 +118,14 @@ app.post('/upload-logs-to-jfrog', async (req, res) => {
 
 app.post('/push-jazz', async (req, res) => {
     try {
-        // Convert out.json to CSV
+        // Update Last Result from out.json to current CSV
         const resultConvert = await convertJsonToCSV();
         if (!resultConvert.ok) {
             throw new Error('Conversion from JSON to CSV failed');
         }
 
-        const resultUpload = uploadCSVToJazz(req, res);
-        
+        // Upload updated.CSV to Jazz
+        const resultUpload = await uploadCSVToJazz(req, res);
 
     } catch (err) {
         console.error("PUSH JAZZ ERROR:", err);

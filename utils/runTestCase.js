@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const ROOT_DIR = path.dirname(__dirname, "..");
-const PROJECT_DIR = path.join(ROOT_DIR, 'web-sentinel-test');
+const PROJECT_DIR = path.join(ROOT_DIR, "project");
 
 function runTestCase (test_case_name, res) {
     return new Promise((resolve, reject) => {
