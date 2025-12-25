@@ -126,6 +126,9 @@ app.post('/push-jazz', async (req, res) => {
 
         // Upload updated.CSV to Jazz
         const resultUpload = await uploadCSVToJazz(req, res);
+        if (!resultUpload.ok) {
+            throw new Error('Upload csv file to Jazz failed');
+        }
 
     } catch (err) {
         console.error("PUSH JAZZ ERROR:", err);

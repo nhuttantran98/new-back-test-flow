@@ -3,3 +3,5 @@
 /dist
 /python_helpers/.venv
 /web-sentinel-test
+/.venv
+.github

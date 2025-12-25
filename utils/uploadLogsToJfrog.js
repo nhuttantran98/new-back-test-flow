@@ -58,6 +58,7 @@ function uploadLogsToJfrog(jfrogArguments) {
 
         proc.on('close', (code) => {
             console.log(stdout);
+            console.log(stderr);
             const artifactUrl = getArtifactUrlAfterUpload(stdout);
             if (artifactUrl) {
                 console.log("Upload successful!");

@@ -29,9 +29,11 @@ async function runThisSuitePython(req, res) {
         return;
     }
     else {
-        for (const testScript of allTestCaseScripts) {
-            await runTestCase(testScript, res);
-        }
+        // for (const testScript of allTestCaseScripts) {
+        //     await runTestCase(testScript, res);
+        // }
+        // const testTemp = ["Directory Management - Scheduler Page - Upload Property File","Directory Management - Scheduler Page - Edit Task"]
+        await runTestCase(allTestCaseScripts, res);
         console.log(`Finished running all test cases for suite: ${test_suite_name}`);
         res.json({ success: true, message: `All test cases completed for suite: ${test_suite_name}` });
     }
