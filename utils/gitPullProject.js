@@ -32,19 +32,44 @@ async function runInVenv(args, options = {}) {
 }
 
 
+async function isPlaywrightInstalled () {
+    const python = getVenvPythonPath();
+    if (!python) return false;
+
+    try {
+        const { stdout } = await execAsync(`"${python}" -m playwright --version`, {
+            cwd: ROOT_DIR,
+        });
+        console.log("Playwright version:", stdout.trim());
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
 
 async function installProjectDeps() {
-    console.log("Create venv folder")
-    await createVenvFolder();
-
-    console.log("Install Python packages, it will take a while ...");
-    await runInVenv('-m pip install --upgrade pip', { cwd: PROJECT_DIR });
-    await runInVenv('-m pip install -r requirements.txt -c constraints.txt', { cwd: PROJECT_DIR, timeout: 120000*10 });
-    await runInVenv('-m playwright install', { cwd: PROJECT_DIR });
-    // If the repo is a Python package (editable install)
-    await runInVenv('-m pip install -e .', { cwd: PROJECT_DIR });
-
-    console.log("Install packages done");
+    try {
+        const isNeedInstallPackage = await isPlaywrightInstalled();
+        if (!isNeedInstallPackage) {
+            console.log("Create venv folder")
+            await createVenvFolder();
+            console.log("Install Python packages, it will take a while ...");
+            await runInVenv('-m pip install --upgrade pip', { cwd: PROJECT_DIR });
+            await runInVenv('-m pip install -r requirements.txt -c constraints.txt', { cwd: PROJECT_DIR, timeout: 120000*10 });
+            await runInVenv('-m playwright install', { cwd: PROJECT_DIR });
+            // If the repo is a Python package (editable install)
+            await runInVenv('-m pip install -e .', { cwd: PROJECT_DIR });
+            console.log("Install packages done");
+            return true;
+        } else {
+            console.log("Install packages done");
+            return true;
+        }
+    } catch (err) {
+        console.log("Install Python package failed.")
+        console.log(err);
+        return false;
+    }
 }
 
 
@@ -69,7 +94,10 @@ async function gitPullProject(req, res) {
 
         if(hasPythonPackage) {
             console.log("Python project cloned sucessfully. Start installing project ...");
-            await installProjectDeps();
+            const resultInstallPackage = await installProjectDeps();
+            if (resultInstallPackage) {
+                res.status(200).json({ success: true, message: "Install Python package done."})
+            }
         }
         
     } catch (err) {

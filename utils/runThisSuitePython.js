@@ -20,12 +20,12 @@ function getAllDefaultTestScripts(test_case_data_json, suite_name) {
 
 
 async function runThisSuitePython(req, res) {
-    const { test_suite_name } = req.body || {};
-    console.log(`Running test suite: ${test_suite_name}`);
+    const { suiteName } = req.body || {};
+    console.log(`Running test suite: ${suiteName}`);
     const testCaseDataJson = JSON.parse(readFileSync(path.join(ROOT_DIR, "outputs", "out.json"), "utf8"));
-    const allTestCaseScripts = getAllDefaultTestScripts(testCaseDataJson, test_suite_name);
+    const allTestCaseScripts = getAllDefaultTestScripts(testCaseDataJson, suiteName);
     if (allTestCaseScripts.length === 0) {
-        res.status(400).json({ success: false, message: `No test cases found for suite: ${test_suite_name}` });
+        res.status(400).json({ success: false, message: `No test cases found for suite: ${suiteName}` });
         return;
     }
     else {
@@ -34,8 +34,8 @@ async function runThisSuitePython(req, res) {
         // }
         // const testTemp = ["Directory Management - Scheduler Page - Upload Property File","Directory Management - Scheduler Page - Edit Task"]
         await runTestCase(allTestCaseScripts, res);
-        console.log(`Finished running all test cases for suite: ${test_suite_name}`);
-        res.json({ success: true, message: `All test cases completed for suite: ${test_suite_name}` });
+        console.log(`Finished running all test cases for suite: ${suiteName}`);
+        res.json({ success: true, message: `All test cases executed for suite: ${suiteName}` });
     }
 }
 

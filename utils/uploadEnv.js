@@ -21,7 +21,7 @@ function uploadEnv(req, res){
 
     // Remove temp file
     fs.unlinkSync(sourcePath);
-
+    console.log("Env created at ", destPath);
     return res.json({ success: true, path: destPath });
 }
 

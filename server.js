@@ -13,6 +13,7 @@ const runThisSuitePython = require('./utils/runThisSuitePython').runThisSuitePyt
 const getJfrogArgsFromRequest = require('./utils/getJfrogArgsFromRequest').getJfrogArgsFromRequest;
 const uploadCSVToJazz = require('./utils/uploadCSVToJazz').uploadCSVToJazz;
 const gitPullProject = require('./utils/gitPullProject').gitPullProject;
+const updateResult = require('./utils/updateResult').updateResult;
 
 const app = express();
 app.use(cors());
@@ -46,6 +47,7 @@ app.post('/run-test-case', (req, res) => {
     runTestCase(test_case_name, res);
 });
 
+// Convert uploaded CSV to JSON file
 app.post('/convert', upload.single('file'), async (req, res) => {
     try {
         convertCSVToJson(req.file, res);
@@ -134,6 +136,31 @@ app.post('/push-jazz', async (req, res) => {
         console.error("PUSH JAZZ ERROR:", err);
         res.status(500).json({ success: false, message: err.message });
     }   
+});
+
+// Update test result in test_results.json to out.json
+app.post('/update-result', async (req, res) => {
+    try {
+        const resultUpdate =await updateResult(req, res);
+    } catch (err) {
+        console.error("UPDATE RESULT ERROR:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// Return out.json data to FE
+app.get('/get-out-json', async (req, res) => {
+    try {
+        const outJsonDataPath = path.join(OUTPUT_DIR, "out.json");
+        if (!fs.existsSync(outJsonDataPath)) {
+            return res.status(404).json({ success: false, message: "out.json not found" });
+        }
+        console.log("Sending out.json file to client");
+        res.sendFile(outJsonDataPath);
+    } catch (err) {
+        console.error("GET OUT JSON ERROR:", err);
+        res.status(500).json({ success: false, message: err.message });
+    }
 });
 
 const PORT = process.env.PORT || 5000;

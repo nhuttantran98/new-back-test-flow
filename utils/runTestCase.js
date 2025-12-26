@@ -33,13 +33,13 @@ function runTestCase(testCases) {
         let stdout = '';
         let stderr = '';
 
-        py.stdout.on('data', (data) => {
+        proc.stdout.on('data', (data) => {
             const text = data.toString();
             stdout += text;
             console.log('PY:', text.trim());
         });
 
-        py.stderr.on('data', (data) => {
+        proc.stderr.on('data', (data) => {
             const text = data.toString();
             stderr += text;
             console.error('PY ERROR:', text.trim());
