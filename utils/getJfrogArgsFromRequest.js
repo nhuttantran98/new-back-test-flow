@@ -1,6 +1,6 @@
 function getJfrogArgsFromRequest(req, res) {
     const args = [];
-    const { "jfrog-url": jfrogUrl, "jfrog-repo": jfrogRepo, "jfrog-token": jfrogToken } = req.body;
+    const { "jfrogUrl": jfrogUrl, "jfrogRepo": jfrogRepo, "jfrogToken": jfrogToken } = req.body;
     if (!jfrogUrl || !jfrogRepo || !jfrogToken) {
         return res.status(400).json({
             success: false,

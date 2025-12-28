@@ -14,6 +14,7 @@ const getJfrogArgsFromRequest = require('./utils/getJfrogArgsFromRequest').getJf
 const uploadCSVToJazz = require('./utils/uploadCSVToJazz').uploadCSVToJazz;
 const gitPullProject = require('./utils/gitPullProject').gitPullProject;
 const updateResult = require('./utils/updateResult').updateResult;
+const setLogPathForOutJson = require('./utils/setLogPathForOutJson').setLogPathForOutJson;
 
 const app = express();
 app.use(cors());
@@ -68,8 +69,7 @@ app.get('/get-json-data', async (req, res) => {
 
 app.post('/pull-project', async (req, res) => {
     try {
-        gitPullProject(req, res);
-
+        await gitPullProject(req, res);
     } catch (err) {
         console.error("GIT PULL ERROR:", err);
         res.status(500).json({ success: false, message: err.message });
@@ -89,16 +89,22 @@ app.post('/run-this-suite-python', async (req, res) => {
     runThisSuitePython(req, res);
 });
 
-app.post('/upload-logs-to-jfrog', async (req, res) => {
+app.post('/upload-logs', async (req, res) => {
     try {
+        console.log("Starting to upload logs to JFrog...");
         const jfrogArguments = getJfrogArgsFromRequest(req, res);
         const allLogFoldersInTestResults = fs.readdirSync(path.join(PROJECT_DIR, "test-results")).filter(f => fs.statSync(path.join(PROJECT_DIR, "test-results", f)).isDirectory());
+        if (allLogFoldersInTestResults.length === 0) {
+            return res.status(400).json({ success: false, message: "No log folders found in test-results" });
+        }
         let flagUploadSuccess = true;
         for (const folderName of allLogFoldersInTestResults) {
             let args = [folderName, ...jfrogArguments];
             const artifactUrl = await uploadLogsToJfrog(args);
             if(artifactUrl) {
                 console.log(`Logs from folder ${folderName} uploaded successfully: ${artifactUrl}`);
+                // Update out.json with log path
+                setLogPathForOutJson(artifactUrl, folderName);
             }
             else {
                 console.error(`Failed to upload logs from folder ${folderName}`);
@@ -120,7 +126,8 @@ app.post('/upload-logs-to-jfrog', async (req, res) => {
 
 app.post('/push-jazz', async (req, res) => {
     try {
-        // Update Last Result from out.json to current CSV
+        console.log("Starting to push results to Jazz...");
+        // Update Last Result from out.json to CSV.updated.csv
         const resultConvert = await convertJsonToCSV();
         if (!resultConvert.ok) {
             throw new Error('Conversion from JSON to CSV failed');
@@ -131,6 +138,7 @@ app.post('/push-jazz', async (req, res) => {
         if (!resultUpload.ok) {
             throw new Error('Upload csv file to Jazz failed');
         }
+        res.status(200).json({ success: true, message: "CSV uploaded to Jazz successfully", stdout: resultUpload.stdout, csvPath: resultUpload.csvPath });
 
     } catch (err) {
         console.error("PUSH JAZZ ERROR:", err);
@@ -141,7 +149,7 @@ app.post('/push-jazz', async (req, res) => {
 // Update test result in test_results.json to out.json
 app.post('/update-result', async (req, res) => {
     try {
-        const resultUpdate =await updateResult(req, res);
+        const resultUpdate = await updateResult(req, res);
     } catch (err) {
         console.error("UPDATE RESULT ERROR:", err);
         res.status(500).json({ success: false, message: err.message });

@@ -74,8 +74,10 @@ async function updateResult(req, res) {
                         testCase["Folder Raw"] = matched?.raw || null;
                         testCase["Folder Clean"] = matched?.cleanName || null;
                         testCase["Log Path"] = null;
+                        testCase["Need Upload"] = "True";
                     } else {
                         testCase["Log Path"] = null;
+                        testCase["Need Upload"] = "False";
                     }
                 }
             }

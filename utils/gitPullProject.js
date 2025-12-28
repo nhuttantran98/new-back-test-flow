@@ -74,18 +74,21 @@ async function installProjectDeps() {
 
 
 async function gitPullProject(req, res) {
+    const isRemoveOldProject = req.body.removeOldProject || false;
     const gitLink = req.body.repoUrl;
     const branchName = req.body.branchName || 'main';
     if (!gitLink) return res.status(400).send('URL Required!');
-    if (fs.existsSync(PROJECT_DIR)) {
-      fs.rmSync(PROJECT_DIR, { recursive: true, force: true });
+    if (isRemoveOldProject && fs.existsSync(PROJECT_DIR)) {
+        console.log("Removing old project folder ...");
+        fs.rmSync(PROJECT_DIR, { recursive: true, force: true });
+        console.log("Cloning repository ...");
+        // Clone repo (await)
+        await execAsync(
+        `git clone --branch ${branchName} --single-branch "${gitLink}" "${PROJECT_DIR}"`,
+        { timeout: 120000 }
+        );
     }
-    console.log("Cloning repository ...");
-    // Clone repo (await)
-    await execAsync(
-      `git clone --branch ${branchName} --single-branch "${gitLink}" "${PROJECT_DIR}"`,
-      { timeout: 120000 }
-    );
+
 
     try {
         const hasPythonPackage =

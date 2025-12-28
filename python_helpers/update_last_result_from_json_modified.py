@@ -141,7 +141,12 @@ def update_csv_last_result(csv_path: str,
     not_matched = 0
 
     for case in cases:
+        need_upload = case.get("Need Upload")
+        if need_upload is None or need_upload is False or str(need_upload).strip().lower() != "True":
+            continue
         new_res = nstr(case.get("Last Result"))
+        if new_res == "Error":
+            new_res = "Failed"
         if not new_res:
             # No new value -> nothing to update
             skipped_no_new_value += 1
@@ -275,3 +280,15 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Run update_csv_last_result when this module is imported
+# update_csv_last_result(
+#     csv_path="uploads/Test Execution Record - many.csv",
+#     json_path="outputs/out.json",
+#     out_path=None,
+#     in_place=False,
+#     allow_name_fallback=False,
+#     dry_run=False,
+#     trace=False,
+#     case_insensitive_compare=False,
+#     suite_filter=None)

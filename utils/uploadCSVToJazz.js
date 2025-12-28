@@ -23,7 +23,7 @@ function uploadCSVToJazz(req, res) {
         try {
             const pythonCmd = process.platform === 'win32' ? 'python' : 'python3';
             const pushJazzScriptPath = path.join(PYTHON_HELPERS_DIR, 'updateTCR.py');
-            const { ['username']: userName, ['password']: password, ['project-name']: projectJazzName } = req.body || {};
+            const { ['user']: userName, ['pass']: password, ['attr']: projectJazzName } = req.body || {};
 
             if (!userName || !password || !projectJazzName) {
                 return reject(new Error('Missing required fields: username, password, project-name'));
@@ -44,7 +44,7 @@ function uploadCSVToJazz(req, res) {
             if (!fs.existsSync(updatedCSVPath)) {
                 return reject(new Error(`CSV file not found: ${updatedCSVPath}`));
             }
-
+            console.log(`Using CSV file: ${updatedCSVPath}`);
             // Build args for Python script
             const args = [
                 pushJazzScriptPath,
