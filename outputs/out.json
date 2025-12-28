@@ -1,26 +1,4 @@
 {
-  "1104166": {
-    "Test suite name": 1104166,
-    "Test case 1": {
-      "Log Path": "",
-      "Build Record ID": 6097,
-      "ID": 1104054,
-      "URL": "https://rationalcld.dl.net/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/SOL+%28Test%29/executionworkitem/urn:com.ibm.rqm:executionworkitem:1104054",
-      "Name": "Help - Welcome Popup",
-      "Test Environment": "Unassigned",
-      "Last Result": "Passed",
-      "Test Plan ID": 3930,
-      "Test Plan": "WS+ 1.21.11 maintenance only regression test",
-      "Test Case ID": 173840,
-      "Test Case": "Help - Welcome Popup",
-      "Test Script ID": 84256,
-      "Default Test Script": "Help - Welcome Popup",
-      "Test Suite Execution Record ID": 1104165,
-      "Test Suite Execution Records": 1104166,
-      "__EMPTY": "Help",
-      "__EMPTY_1": " License Agreement"
-    }
-  },
   "Scan Point Management": {
     "Test suite name": "Scan Point Management",
     "Test case 1": {
@@ -38,9 +16,7 @@
       "Test Script ID": 84349,
       "Default Test Script": "Scan Point Management - Edit Page - Scan Point with Connectivity<5000",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     },
     "Test case 2": {
       "Log Path": "",
@@ -57,9 +33,7 @@
       "Test Script ID": 84339,
       "Default Test Script": "Scan Point Management - Edit Page - Scan Point with a Long Name",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     },
     "Test case 3": {
       "Log Path": "",
@@ -76,9 +50,7 @@
       "Test Script ID": 84310,
       "Default Test Script": "Scan Point Management - Add Page - Scan Point with Special Character in Name",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     },
     "Test case 4": {
       "Log Path": "",
@@ -95,9 +67,7 @@
       "Test Script ID": 84316,
       "Default Test Script": "Scan Point Management - Add Page - Scan Point with Special Character in Port",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     },
     "Test case 5": {
       "Log Path": "",
@@ -114,9 +84,7 @@
       "Test Script ID": 84356,
       "Default Test Script": "Scan Point Management - Edit Page - Scan Point with Port Out of Range",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     },
     "Test case 6": {
       "Log Path": "",
@@ -133,9 +101,7 @@
       "Test Script ID": 84320,
       "Default Test Script": "Scan Point Management - Add Page - Scan Point with Connectivity>240K",
       "Test Suite Execution Record ID": 1104119,
-      "Test Suite Execution Records": "Scan Point Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Scan Point Management"
     }
   },
   "Facility Management": {
@@ -155,9 +121,7 @@
       "Test Script ID": 84287,
       "Default Test Script": "Facility Management - Main Page - Delete Facility",
       "Test Suite Execution Record ID": 1104160,
-      "Test Suite Execution Records": "Facility Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Facility Management"
     },
     "Test case 2": {
       "Log Path": "",
@@ -174,9 +138,7 @@
       "Test Script ID": 84276,
       "Default Test Script": "Facility Management - Add Page - Facility Name Not Filled",
       "Test Suite Execution Record ID": 1104160,
-      "Test Suite Execution Records": "Facility Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Facility Management"
     },
     "Test case 3": {
       "Log Path": "",
@@ -193,9 +155,7 @@
       "Test Script ID": 84289,
       "Default Test Script": "Facility Management - Main Page - Add New Facility",
       "Test Suite Execution Record ID": 1104160,
-      "Test Suite Execution Records": "Facility Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Facility Management"
     },
     "Test case 4": {
       "Log Path": "",
@@ -212,9 +172,7 @@
       "Test Script ID": 84286,
       "Default Test Script": "Facility Management - Main Page - Edit Facility",
       "Test Suite Execution Record ID": 1104160,
-      "Test Suite Execution Records": "Facility Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Facility Management"
     }
   },
   "User Management": {
@@ -234,9 +192,7 @@
       "Test Script ID": 84168,
       "Default Test Script": "User Management - Edit Page - Reset Button Restore Visibility Status for Add Site Button",
       "Test Suite Execution Record ID": 1104161,
-      "Test Suite Execution Records": "User Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "User Management"
     },
     "Test case 2": {
       "Log Path": "",
@@ -253,9 +209,7 @@
       "Test Script ID": 84158,
       "Default Test Script": "User Management - Add Page - Error for Empty Email",
       "Test Suite Execution Record ID": 1104161,
-      "Test Suite Execution Records": "User Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "User Management"
     },
     "Test case 3": {
       "Log Path": "",
@@ -272,9 +226,7 @@
       "Test Script ID": 84169,
       "Default Test Script": "User Management - Edit Page - Reset Button Restore Visibility Status for Access Section",
       "Test Suite Execution Record ID": 1104161,
-      "Test Suite Execution Records": "User Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "User Management"
     }
   },
   "Directory Management": {
@@ -294,9 +246,7 @@
       "Test Script ID": 84249,
       "Default Test Script": "Directory Management - Scheduler Page - Cancel Closes Edit Modal",
       "Test Suite Execution Record ID": 1104162,
-      "Test Suite Execution Records": "Directory Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Directory Management"
     },
     "Test case 2": {
       "Log Path": "",
@@ -313,9 +263,7 @@
       "Test Script ID": 84245,
       "Default Test Script": "Directory Management - Properties Page - Edit Property File",
       "Test Suite Execution Record ID": 1104162,
-      "Test Suite Execution Records": "Directory Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Directory Management"
     },
     "Test case 3": {
       "Log Path": "",
@@ -332,9 +280,7 @@
       "Test Script ID": 84229,
       "Default Test Script": "Directory Management - Mode 1 - Deletes Files Older Than FileDays",
       "Test Suite Execution Record ID": 1104162,
-      "Test Suite Execution Records": "Directory Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Directory Management"
     },
     "Test case 4": {
       "Log Path": "",
@@ -351,15 +297,13 @@
       "Test Script ID": 84224,
       "Default Test Script": "Directory Management - Mode 0 - Deletes Old Files Until Enough Space",
       "Test Suite Execution Record ID": 1104162,
-      "Test Suite Execution Records": "Directory Management",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Directory Management"
     }
   },
   "About": {
     "Test suite name": "About",
     "Test case 1": {
-      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228063133/About - Navigate to About.zip",
+      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228082155/About - Navigate to About.zip",
       "Build Record ID": 6097,
       "ID": 1104037,
       "URL": "https://rationalcld.dl.net/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/SOL+%28Test%29/executionworkitem/urn:com.ibm.rqm:executionworkitem:1104037",
@@ -374,14 +318,12 @@
       "Default Test Script": "About - Navigate to About",
       "Test Suite Execution Record ID": 1104163,
       "Test Suite Execution Records": "About",
-      "__EMPTY": "",
-      "__EMPTY_1": "",
       "Folder Raw": "About - Navigate to About",
       "Folder Clean": "About - Navigate to About",
       "Need Upload": "True"
     },
     "Test case 2": {
-      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228063201/About - Reboot Server.zip",
+      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228082220/About - Reboot Server.zip",
       "Build Record ID": 6097,
       "ID": 1104038,
       "URL": "https://rationalcld.dl.net/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/SOL+%28Test%29/executionworkitem/urn:com.ibm.rqm:executionworkitem:1104038",
@@ -396,14 +338,12 @@
       "Default Test Script": "About - Reboot Server",
       "Test Suite Execution Record ID": 1104163,
       "Test Suite Execution Records": "About",
-      "__EMPTY": "",
-      "__EMPTY_1": "",
       "Folder Raw": "About - Reboot Server",
       "Folder Clean": "About - Reboot Server",
       "Need Upload": "True"
     },
     "Test case 3": {
-      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228063148/About - Navigate to Datalogic.zip",
+      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228082208/About - Navigate to Datalogic.zip",
       "Build Record ID": 6097,
       "ID": 1104039,
       "URL": "https://rationalcld.dl.net/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/SOL+%28Test%29/executionworkitem/urn:com.ibm.rqm:executionworkitem:1104039",
@@ -418,14 +358,12 @@
       "Default Test Script": "About - Navigate to Datalogic",
       "Test Suite Execution Record ID": 1104163,
       "Test Suite Execution Records": "About",
-      "__EMPTY": "",
-      "__EMPTY_1": "",
       "Folder Raw": "About - Navigate to Datalogic",
       "Folder Clean": "About - Navigate to Datalogic",
       "Need Upload": "True"
     },
     "Test case 4": {
-      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228063215/About - Restart Application.zip",
+      "Log Path": "https://trialtaiahg.jfrog.io/artifactory/qatesting/test/testreport/ws/WS_1.21.0_20251228082232/About - Restart Application.zip",
       "Build Record ID": 6097,
       "ID": 1104040,
       "URL": "https://rationalcld.dl.net/qm/service/com.ibm.rqm.integration.service.IIntegrationService/resources/SOL+%28Test%29/executionworkitem/urn:com.ibm.rqm:executionworkitem:1104040",
@@ -440,8 +378,6 @@
       "Default Test Script": "About - Restart Application",
       "Test Suite Execution Record ID": 1104163,
       "Test Suite Execution Records": "About",
-      "__EMPTY": "",
-      "__EMPTY_1": "",
       "Folder Raw": "About - Restart Application",
       "Folder Clean": "About - Restart Application",
       "Need Upload": "True"
@@ -464,9 +400,7 @@
       "Test Script ID": 84263,
       "Default Test Script": "Change Password - Resets Form",
       "Test Suite Execution Record ID": 1104164,
-      "Test Suite Execution Records": "Change Password",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Change Password"
     },
     "Test case 2": {
       "Log Path": "",
@@ -483,9 +417,7 @@
       "Test Script ID": 84261,
       "Default Test Script": "Change Password - New Password Required",
       "Test Suite Execution Record ID": 1104164,
-      "Test Suite Execution Records": "Change Password",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Change Password"
     },
     "Test case 3": {
       "Log Path": "",
@@ -502,9 +434,7 @@
       "Test Script ID": 84264,
       "Default Test Script": "Change Password - Old Password Required",
       "Test Suite Execution Record ID": 1104164,
-      "Test Suite Execution Records": "Change Password",
-      "__EMPTY": "",
-      "__EMPTY_1": ""
+      "Test Suite Execution Records": "Change Password"
     }
   }
 }

@@ -139,11 +139,9 @@ def update_csv_last_result(csv_path: str,
     unchanged_same_value = 0
     skipped_no_new_value = 0
     not_matched = 0
-
+    row_to_output = []
     for case in cases:
         need_upload = case.get("Need Upload")
-        if need_upload is None or need_upload is False or str(need_upload).strip().lower() != "True":
-            continue
         new_res = nstr(case.get("Last Result"))
         if new_res == "Error":
             new_res = "Failed"
@@ -211,6 +209,7 @@ def update_csv_last_result(csv_path: str,
                 if new_log is not None:
                     rows[i]["Log Path"] = new_log
             updated += 1
+            row_to_output.append(rows[i])
 
     # Write file (unless dry-run)
     written_path = None
@@ -220,14 +219,14 @@ def update_csv_last_result(csv_path: str,
         if in_place:
             backup_path = csv_path + ".bak"
             shutil.copyfile(csv_path, backup_path)
-            write_csv_rows(csv_path, rows, fieldnames)
+            write_csv_rows(csv_path, row_to_output, fieldnames)
             print(f"Updated CSV in-place. Backup created at: {backup_path}")
             written_path = csv_path
         else:
             if not out_path:
                 root, ext = os.path.splitext(csv_path)
                 out_path = root + ".updated" + (ext or ".csv")
-            write_csv_rows(out_path, rows, fieldnames)
+            write_csv_rows(out_path, row_to_output, fieldnames)
             print(f"Wrote updated CSV to: {out_path}")
             written_path = out_path
 
