@@ -34,18 +34,6 @@ function runTestCase(testCases) {
         let stderr = '';
 
         proc.stdout.on('data', (data) => {
-            const text = data.toString();
-            stdout += text;
-            console.log('PY:', text.trim());
-        });
-
-        proc.stderr.on('data', (data) => {
-            const text = data.toString();
-            stderr += text;
-            console.error('PY ERROR:', text.trim());
-        });
-
-        proc.stdout.on('data', (data) => {
             try {
                 const text = data.toString();
                 stdout += text;
@@ -58,7 +46,7 @@ function runTestCase(testCases) {
         proc.stderr.on('data', (data) => {
             try {
                 const text = data.toString();
-                stdout += text;
+                stderr += text;
                 console.log(text.trim()); 
             } catch {
                 console.error(String(data));

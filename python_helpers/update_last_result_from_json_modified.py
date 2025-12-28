@@ -141,7 +141,6 @@ def update_csv_last_result(csv_path: str,
     not_matched = 0
     row_to_output = []
     for case in cases:
-        need_upload = case.get("Need Upload")
         new_res = nstr(case.get("Last Result"))
         if new_res == "Error":
             new_res = "Failed"
@@ -209,7 +208,13 @@ def update_csv_last_result(csv_path: str,
                 if new_log is not None:
                     rows[i]["Log Path"] = new_log
             updated += 1
-            row_to_output.append(rows[i])
+
+    for case in cases:
+        name = nstr(case.get("Test Case")) or nstr(case.get("Name"))
+        for row in rows:
+            if nstr(row.get("Test Case")) == name or nstr(row.get("Name")) == name:
+                if nstr(case.get("Need Upload")) == "True":
+                    row_to_output.append(row)
 
     # Write file (unless dry-run)
     written_path = None
@@ -282,7 +287,7 @@ if __name__ == "__main__":
 
 # Run update_csv_last_result when this module is imported
 # update_csv_last_result(
-#     csv_path="uploads/Test Execution Record - many.csv",
+#     csv_path="uploads/reference_file.csv",
 #     json_path="outputs/out.json",
 #     out_path=None,
 #     in_place=False,

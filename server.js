@@ -10,6 +10,7 @@ const uploadEnv = require('./utils/uploadEnv').uploadEnv;
 const uploadLogsToJfrog = require('./utils/uploadLogsToJfrog').uploadLogsToJfrog;
 const runTestCase = require('./utils/runTestCase').runTestCase;
 const runThisSuitePython = require('./utils/runThisSuitePython').runThisSuitePython;
+const runThisProjectPython = require('./utils/runThisProjectPython').runThisProjectPython;
 const getJfrogArgsFromRequest = require('./utils/getJfrogArgsFromRequest').getJfrogArgsFromRequest;
 const uploadCSVToJazz = require('./utils/uploadCSVToJazz').uploadCSVToJazz;
 const gitPullProject = require('./utils/gitPullProject').gitPullProject;
@@ -86,7 +87,11 @@ app.post('/upload-env', upload.single('file'), (req, res) => {
 });
 
 app.post('/run-this-suite-python', async (req, res) => {
-    runThisSuitePython(req, res);
+    await runThisSuitePython(req, res);
+});
+
+app.post('/run-this-project-python', async (req, res) => {
+    runThisProjectPython(req, res, true);
 });
 
 app.post('/upload-logs', async (req, res) => {

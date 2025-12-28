@@ -5,7 +5,7 @@ const { runTestCase } = require("./runTestCase");
 
 const ROOT_DIR = path.dirname(__dirname);
 
-function getAllDefaultTestScripts(test_case_data_json, suite_name) {
+function getAllDefaultTestScripts(test_case_data_json, suite_name = 'all') {
     const scripts = [];
     for (const testCaseKey in test_case_data_json[suite_name]) {
         if (testCaseKey.startsWith("Test case ")) {
@@ -19,7 +19,7 @@ function getAllDefaultTestScripts(test_case_data_json, suite_name) {
 }
 
 
-async function runThisSuitePython(req, res) {
+async function runThisSuitePython(req, res, isReturn = true) {
     const { suiteName } = req.body || {};
     console.log(`Running test suite: ${suiteName}`);
     const testCaseDataJson = JSON.parse(readFileSync(path.join(ROOT_DIR, "outputs", "out.json"), "utf8"));
@@ -32,8 +32,9 @@ async function runThisSuitePython(req, res) {
         // for (const testScript of allTestCaseScripts) {
         //     await runTestCase(testScript, res);
         // }
-        await runTestCase(allTestCaseScripts, res);
+        await runTestCase(allTestCaseScripts);
         console.log(`Finished running all test cases for suite: ${suiteName}`);
+        if(isReturn == false) return;
         res.json({ success: true, message: `All test cases executed for suite: ${suiteName}` });
         return;
     }

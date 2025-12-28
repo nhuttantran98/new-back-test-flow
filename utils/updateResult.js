@@ -45,6 +45,19 @@ function cleanFolderName(folderName) {
     return folderName.substring(0, cutIndex).trim();
 }
 
+function resetAllNeedUploadFlags(outJson) {
+    const outJsonPath = path.join(OUTPUT_DIR, "out.json");
+    for (const suiteName of Object.keys(outJson)) {
+        for (const key of Object.keys(outJson[suiteName])) {
+            if (!key.startsWith("Test case ")) continue;
+            const testCase = outJson[suiteName][key];
+            if( testCase["Need Upload"] === undefined ) continue;
+            testCase["Need Upload"] = "False";
+        }
+    }
+    fs.writeFileSync(outJsonPath, JSON.stringify(outJson, null, 2));
+}
+
 async function updateResult(req, res) {
     const testResultJsonPath = path.join(PROJECT_DIR, "test-results", "test-results.json");
     const outJsonPath = path.join(OUTPUT_DIR, "out.json");
@@ -62,6 +75,8 @@ async function updateResult(req, res) {
                 cleanName: cleanFolderName(dir.name)
             }))
 
+        resetAllNeedUploadFlags(outJson);
+
         for (const { title, status } of testResults) {
             for (const suiteName of Object.keys(outJson)) {
                 for (const key of Object.keys(outJson[suiteName])) {
@@ -69,20 +84,16 @@ async function updateResult(req, res) {
                     const testCase = outJson[suiteName][key];
                     if (testCase["Name"] !== title) continue;
                     testCase["Last Result"] = status;
-                    const matched = logFolders.find(folder => folder.cleanName === testCase["Name"]);
+                    testCase["Need Upload"] = "True";
+                    testCase["Log Path"] = null;
+                    const matched = logFolders.find(folder => folder.cleanName == testCase["Name"]);
                     if (matched) {
                         testCase["Folder Raw"] = matched?.raw || null;
                         testCase["Folder Clean"] = matched?.cleanName || null;
-                        testCase["Log Path"] = null;
-                        testCase["Need Upload"] = "True";
-                    } else {
-                        testCase["Log Path"] = null;
-                        testCase["Need Upload"] = "False";
                     }
                 }
             }
         }
-                    
         fs.writeFileSync(outJsonPath, JSON.stringify(outJson, null, 2));
         res.status(200).json({ success: true, message: "Test results updated successfully" });
         return true;

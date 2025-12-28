@@ -3,6 +3,7 @@ const fs = require("fs");
 const { readFile, utils } = require("xlsx");
 const { spawn } = require('child_process');
 
+
 const ROOT_DIR = path.dirname(__dirname, "..");
 const UPLOAD_DIR = path.join(ROOT_DIR, "uploads");
 const OUTPUT_DIR = path.join(ROOT_DIR, "outputs");
@@ -26,12 +27,19 @@ function getNewestCSVFileName(folderPath) {
   }
 }
 
+function getReferrenceCSVPath() {
+    return path.join(UPLOAD_DIR, "reference_file.csv");
+}
+
 function convertCSVToJson(csvFile, res) {
     const fileName = csvFile.originalname;
     const filePath = path.join(UPLOAD_DIR, fileName);
     console.log("File uploaded ", fileName);
+    // --- 0. Change file name to reference_file.csv ---
+    const referenceFilePath = path.join(UPLOAD_DIR, "reference_file.csv");
+    fs.renameSync(filePath, referenceFilePath);
     // --- 1. Read file Excel ---
-    const workbook = readFile(filePath);
+    const workbook = readFile(referenceFilePath);
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
 
@@ -71,7 +79,7 @@ function convertJsonToCSV() {
             const scriptPath = path.join(PYTHON_HELPERS_DIR, 'update_last_result_from_json_modified.py');
             const outJSONPath = path.join(OUTPUT_DIR, 'out.json');
 
-            const convertedCSVName = getNewestCSVFileName(UPLOAD_DIR);
+            const convertedCSVName = "reference_file.csv"
             if (!convertedCSVName) {
                 return reject(new Error('No CSV file found in upload directory.'));
             }
